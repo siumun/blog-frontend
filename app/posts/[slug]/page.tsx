@@ -3,6 +3,7 @@ import NavigationBar from "../../components/NavigationBar";
 import Link from "next/link";
 import Favorite from "../../components/Favorite";
 import { Post } from "../../types/post";
+import Comment from "../../components/Comment";
 export default async function PostDetails({
     params,
 }: {
@@ -52,6 +53,10 @@ export default async function PostDetails({
 
             <div>
                     <Favorite postId={post.id}/>
+            </div>
+
+            <div>
+                <Comment postId={post.id}/>
             </div>
         </div>
         </>
