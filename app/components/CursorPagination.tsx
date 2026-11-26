@@ -46,7 +46,11 @@ export default function CursorPagination() {
             const data: PostsResponse = await response.json();
 
             // Append new posts to existing posts
-            setPosts((prevPosts) => [...prevPosts, ...data.posts]);
+            // (dedupe by id: React StrictMode runs the mount effect twice in dev)
+            setPosts((prevPosts) => {
+                const seen = new Set(prevPosts.map((p) => p.id));
+                return [...prevPosts, ...data.posts.filter((p) => !seen.has(p.id))];
+            });
 
             // Store the next cursor
             setNextCursor(data.next_cursor);
@@ -72,7 +76,7 @@ export default function CursorPagination() {
     };
 
     return (
-        <div className="space-y-6">
+        <div>
 
             <div className="grid grid-cols-1 gap-6">
                 {posts.map((post) => (
