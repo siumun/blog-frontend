@@ -14,7 +14,8 @@ export default async function PostsList() {
         throw new Error("Failed to fetch posts");
     }
 
-    const posts: Post[] = await response.json();
+    const data = await response.json();
+    const posts: Post[] = data.posts
 
     if (posts.length === 0) {
         return <p>No posts available</p>;
